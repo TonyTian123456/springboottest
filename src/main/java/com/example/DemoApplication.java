@@ -6,10 +6,12 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.boot.web.servlet.ServletComponentScan;
 
 /**
  * Created by cicada on 2019/8/20.
  */
+@ServletComponentScan
 @MapperScan("com.example.mapper")
 @SpringBootApplication
 public class DemoApplication {

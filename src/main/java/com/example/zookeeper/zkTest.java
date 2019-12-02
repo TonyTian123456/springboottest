@@ -33,7 +33,7 @@ public class zkTest {
             if (null != client.checkExists().forPath("/websocket")){
                 client.setData().forPath("/websocket","哈哈哈".getBytes());
             }else {
-                client.create().forPath("/websocket",user.toString().getBytes());
+                client.create().forPath("/websocket",database1.toString().getBytes());
             }
             byte[] bytes = client.getData().forPath("/websocket");
             String s = bytes.toString();

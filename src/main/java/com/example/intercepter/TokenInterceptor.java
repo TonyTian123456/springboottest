@@ -7,6 +7,8 @@ import com.example.constants.CurrentUserConstants;
 import com.example.entity.data.User;
 import com.example.exception.BizException;
 import com.example.exception.ErrCode;
+import com.example.utils.HttpHelper;
+import com.example.utils.MD5Util;
 import com.example.utils.TokenUtils;
 import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,9 @@ public class TokenInterceptor extends HandlerInterceptorAdapter {
 
     public final static String ACCESS_TOKEN = "accessToken";
 
+    public final static String AK = "pNx2XBmBse3e6vwhhEV5Iarp8qCvEOYS";
+    public final static String SK = "rlWatNcv3VKfVyjgb0oAxcV3EIOjfAoU";
+
     @Autowired
     private RedisTemplate redisTemplate;
 
@@ -42,6 +47,8 @@ public class TokenInterceptor extends HandlerInterceptorAdapter {
         Method method = handlerMethod.getMethod();
         // 判断接口是否需要登录
         LoginRequired methodAnnotation = method.getAnnotation(LoginRequired.class);
+        // 判断接口是否需要登录
+        CheckSign checkSignAnnotation = method.getAnnotation(CheckSign.class);
         // 有 @LoginRequired 注解，需要认证
         if (methodAnnotation != null) {
             // 判断是否存在令牌信息，如果存在，则允许登录
@@ -72,23 +79,16 @@ public class TokenInterceptor extends HandlerInterceptorAdapter {
             }
             request.setAttribute(CurrentUserConstants.CURRENT_USER, user);
             return true;
-        }else{
-            // 没有认证，需要根据请求的ip 判断system_id
-            String url = request.getRequestURL().toString() ;
-            /*// Test-Start
-            // 不需要登录时，暂时通过ACCESS_TOKEN来模拟请求的不同地址
-            url = request.getHeader(ACCESS_TOKEN);
-            Long companyId = 0L;
-            if ("15.14".equals(url)) {
-                companyId = 1514L;
+        }else if (checkSignAnnotation  != null){
+            String requestId=request.getHeader("requestId");
+            Long requestTime =Long.valueOf(request.getHeader("requestTime"));
+            String sign=request.getHeader("signature");
+
+            String bodyString = HttpHelper.getBodyString(request);
+            String localSign = MD5Util.getMD5(AK + SK +requestId+ requestTime + bodyString);
+            if (!localSign.equals(sign)){
+                throw new BizException(ErrCode.SIGNATURE_STATUS_ERROR);
             }
-            else if ("99.86".equals(url)){
-                companyId = 9986L;
-            }
-            // Test-End
-            request.setAttribute(CurrentUserConstants.COMPANY, companyId);*/
-            // TODO 默认companyId的配置
-//            request.setAttribute(CurrentUserConstants.COMPANY, defaultCompanyId);
         }
         return true;
     }

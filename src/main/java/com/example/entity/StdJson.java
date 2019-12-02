@@ -41,6 +41,10 @@ public final class StdJson<T> implements Serializable {
         return new StdJson(0, data, (String)null);
     }
 
+    public static StdJson ok(Object data,String message) {
+        return new StdJson(0, data, message);
+    }
+
     public static StdJson err(String message) {
         return err(1, message);
     }

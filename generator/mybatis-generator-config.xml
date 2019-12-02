@@ -9,15 +9,15 @@
                         userId="root" password="123456">
         </jdbcConnection>
 
-        <javaModelGenerator targetPackage="com.example.domain.student" targetProject="src/main/java">
+        <javaModelGenerator targetPackage="com.example.domain.database2" targetProject="src/main/java">
             <property name="enableSubPackages" value="false" />
             <property name="trimStrings" value="true" />
         </javaModelGenerator>
 
-        <sqlMapGenerator targetPackage="mybatis/student" targetProject="src/main/resources">
+        <sqlMapGenerator targetPackage="mybatis/database2" targetProject="src/main/resources">
         </sqlMapGenerator>
 
-        <javaClientGenerator type="XMLMAPPER" targetPackage="com.example.mapper.student" targetProject="src/main/java">
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.example.mapper.database2" targetProject="src/main/java">
             <property name="enableSubPackages" value="false" />
         </javaClientGenerator>
 
@@ -35,8 +35,8 @@
         <!--<property name="useActualColumnNames" value="true" />-->
         <!--</table>-->
 
-        <table schema="public" tableName="student" domainObjectName="Student">
-            <property name="useActualColumnNames" value="true" />
+        <table schema="public" tableName="notify_result" domainObjectName="NotifyResult">
+            <property name="useActualColumnNames" value="false" />
         </table>
 
 
