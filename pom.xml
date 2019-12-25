@@ -192,6 +192,13 @@
             <artifactId>httpclient</artifactId>
             <version>4.5.5</version>
         </dependency>
+
+        <!--pagehelper-->
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper-spring-boot-starter</artifactId>
+            <version>RELEASE</version>
+        </dependency>
     </dependencies>
 
 

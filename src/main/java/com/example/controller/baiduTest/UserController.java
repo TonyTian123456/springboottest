@@ -30,7 +30,7 @@ public class UserController {
     private final Logger logger = LoggerFactory.getLogger(UserController.class);
     private static final String CLASSNAME = "UserController";
 
-    String  filePath="/Users/cicada/Desktop/face_test";
+    String  filePath="/Users/cicada/Desktop/1204";
 
     @Autowired
     private IBaiduTestService baiduTestService;
